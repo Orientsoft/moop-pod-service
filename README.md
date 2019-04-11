@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: copy
-        image: busybox:1.28.4
+        image: podbox:latest
         imagePullPolicy: IfNotPresent
         args:
           - /bin/sh
@@ -56,7 +56,7 @@ podTemplate:
                 "containers": [
                     {
                         "name": "copy",
-                        "image": "busybox:1.28.4",
+                        "image": "podbox:latest",
                         "imagePullPolicy": "IfNotPresent",
                         "args": [
                             "/bin/sh",
@@ -77,6 +77,11 @@ podTemplate:
 ## K8S namespace
 
 **After creating tenant, please create a k8s namespace with tenant.namespace.**  
+
+## images
+
+During deployment, please build alpine or busybox image with dockerfiles in the project root.  
+Record image tag for further tenant setup.  
 
 ## envs
 
