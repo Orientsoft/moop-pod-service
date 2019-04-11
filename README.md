@@ -76,7 +76,7 @@ podTemplate:
 
 ## K8S namespace
 
-**After creating tenant, please create a k8s namespace with tenant.id.**  
+**After creating tenant, please create a k8s namespace with tenant.namespace.**  
 
 ## envs
 
