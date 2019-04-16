@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pod-service-config
+
+data:
+    config.yaml: |-
+      host: '0.0.0.0'
+      port: 80
+      debug: true
+      # whether the service is running in a k8s cluster
+      in_cluster: true
+      # 10 - debug
+      log_level: 10
+      tenant_service_url: 'http://tenant-service/service/v1/tenants'
