@@ -92,6 +92,8 @@ config.yaml:
 host: '0.0.0.0'
 port: 5020
 debug: true
+# whether the service is running in a k8s cluster
+in_cluster: false
 # 10 - debug
 log_level: 10
 tenant_service_url: 'http://192.168.0.48:7778/service/v1/tenants'
