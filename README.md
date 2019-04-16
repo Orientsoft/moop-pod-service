@@ -83,20 +83,24 @@ podTemplate:
 During deployment, please build alpine or busybox image with dockerfiles in the project root.  
 Record image tag for further tenant setup.  
 
-## envs
+## config.yaml
 
-default ```env.sh```:  
+Please place config.yaml under the root of pod service.  
 
-```sh
-export LOG_LEVEL=10 # debug
-export TENANT_SERVICE_URL='http://192.168.0.48:7778/service/v1/tenants'
+config.yaml:  
+```yaml
+host: '0.0.0.0'
+port: 5020
+debug: true
+# 10 - debug
+log_level: 10
+tenant_service_url: 'http://192.168.0.48:7778/service/v1/tenants'
 ```
 
 ## dev start
 
 ```sh
-source ./env.sh
-FLASK_APP=./pod-service.py flask run -h 0.0.0.0 -p 5020
+python pod-service.py
 ```
 
 ## API

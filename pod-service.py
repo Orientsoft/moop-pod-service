@@ -16,14 +16,30 @@ from kubernetes.client.rest import ApiException
 
 import requests
 from flask import Flask, redirect, request, Response
-
-# envs
-LOG_LEVEL = int(os.getenv('LOG_LEVEL', ''))
-TENANT_SERVICE_URL = os.environ.get('TENANT_SERVICE_URL', '/').strip()
+import yaml
 
 # consts
 SERVICE_PREFIX = '/pods'
 API_VERSION = 'service/v1'
+
+CONFIG_PATH = './config.yaml'
+
+with open(CONFIG_PATH) as config_file:
+    config_str = config_file.read()
+    configs = yaml.load(config_str)
+
+    LOG_LEVEL = configs['log_level']
+    TENANT_SERVICE_URL = configs['tenant_service_url']
+
+    HOST = configs['host']
+    PORT = configs['port']
+    DEBUG = configs['debug']
+
+# envs
+'''
+LOG_LEVEL = int(os.getenv('LOG_LEVEL', ''))
+TENANT_SERVICE_URL = os.environ.get('TENANT_SERVICE_URL', '/').strip()
+'''
 
 # logger
 LOG_NAME = 'Pod-Service'
@@ -283,3 +299,13 @@ def remove_pod(req_body, namespace=''):
             status=500,
             mimetype='application/json'
         )
+
+
+if __name__ == '__main__':
+    logger.debug('configs: {}'.format(configs))
+    app.run(
+        debug=DEBUG,
+        host=HOST,
+        port=PORT,
+        threaded=True
+    )
