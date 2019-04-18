@@ -12,5 +12,11 @@ build:
 push: build
 	docker push "$(REGISTRY)/$(IMAGE):$(TAG)"
 
-# deploy: push
-# 	kubectl apply -f deploy/ --namespace "$(DEPLOY_NAMESPACE)"
+deploy: push
+	# replace image tag on deployment.yaml
+	sed -i 's/{IMAGE_TAG}/$(TAG)/g' deploy/pod-service-deployment.yaml
+	# apply change
+	kubectl apply -f deploy/ --namespace "$(DEPLOY_NAMESPACE)"
+	# restore depo
+	sed -i 's/$(TAG)/{IMAGE_TAG}/g' deploy/pod-service-deployment.yaml
+

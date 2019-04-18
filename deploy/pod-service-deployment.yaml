@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: moop-pod-service
-        image: registry.datadynamic.io/moop/moop-pod-service:19b53a8
+        image: registry.datadynamic.io/moop/moop-pod-service:{IMAGE_TAG}
         volumeMounts:
         - name:  pod-service-config
           mountPath: /app/config.yaml
