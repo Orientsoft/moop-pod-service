@@ -14,9 +14,9 @@ push: build
 
 deploy: push
 	# replace image tag on deployment.yaml
-	sed -i 's/{IMAGE_TAG}/$(TAG)/g' deploy/pod-service-deployment.yaml
+	sed -i 's/{IMAGE_TAG_for_change}/$(TAG)/g' deploy/pod-service-deployment.yaml
 	# apply change
 	kubectl apply -f deploy/ --namespace "$(DEPLOY_NAMESPACE)"
 	# restore depo
-	sed -i 's/$(TAG)/{IMAGE_TAG}/g' deploy/pod-service-deployment.yaml
+	sed -i 's/$(TAG)/{IMAGE_TAG_for_change}/g' deploy/pod-service-deployment.yaml
 
