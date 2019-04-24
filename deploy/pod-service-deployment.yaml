@@ -16,6 +16,7 @@ spec:
         app: moop
         service: pod-service
     spec:
+      serviceAccountName: moop
       containers:
       - name: moop-pod-service
         image: registry.datadynamic.io/moop/moop-pod-service:{IMAGE_TAG_for_change}
