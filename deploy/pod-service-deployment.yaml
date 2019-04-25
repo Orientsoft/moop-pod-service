@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-service
+  # namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moop
+      service: pod-service
+  template:
+    metadata:
+      labels:
+        app: moop
+        service: pod-service
+    spec:
+      serviceAccountName: moop
+      containers:
+      - name: moop-pod-service
+        image: registry.datadynamic.io/moop/moop-pod-service:{IMAGE_TAG_for_change}
+        volumeMounts:
+        - name:  pod-service-config
+          mountPath: /app/config.yaml
+          subPath: config.yaml
+
+      imagePullSecrets:
+      - name: regcred
+
+      volumes:
+      - name:  pod-service-config
+        configMap:
+          name: pod-service-config
