@@ -95,7 +95,7 @@ def create_body(f):
         vols = req_body['vols'] if 'vols' in req_body.keys() else []
 
         # read templates from tenant service
-        tenant_resp = requests.get('{}/{}'.format(TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': app.config['MOOPKEY']})
+        tenant_resp = requests.get('{}/{}'.format(TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': MOOPKEY})
         if tenant_resp.status_code != 200:
             logger.error('Request Error: {}\nStack: {}\n'.format(tenant_resp.json(), traceback.format_exc()))
             return Response(
@@ -168,7 +168,7 @@ def get_params(f):
             )
 
         # read templates from tenant service
-        tenant_resp = requests.get('{}/{}'.format(TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': app.config['MOOPKEY']})
+        tenant_resp = requests.get('{}/{}'.format(TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': MOOPKEY})
         if tenant_resp.status_code != 200:
             logger.error('Request Error: {}\nStack: {}\n'.format(tenant_resp.json(), traceback.format_exc()))
             return Response(
