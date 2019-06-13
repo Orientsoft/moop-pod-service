@@ -30,6 +30,7 @@ with open(CONFIG_PATH) as config_file:
 
     LOG_LEVEL = configs['log_level']
     TENANT_SERVICE_URL = configs['tenant_service_url']
+    MOOPKEY = configs['MOOPKEY']
 
     HOST = configs['host']
     PORT = configs['port']
