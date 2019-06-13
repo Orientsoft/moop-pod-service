@@ -14,3 +14,4 @@ data:
       # 10 - debug
       log_level: 10
       tenant_service_url: 'http://tenant-service/service/v1/tenants'
+      MOOPKEY: 'faf23ej21fklajfla'
