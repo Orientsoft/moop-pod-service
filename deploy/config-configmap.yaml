@@ -13,5 +13,5 @@ data:
       in_cluster: true
       # 10 - debug
       log_level: 10
-      tenant_service_url: 'http://192.168.0.34:32280/services/v1/tenant'
+      tenant_service_url: 'http://192.168.0.34:32280/services/v1/tenant/tenants'
       MOOPKEY: 'faf23ej21fklajfla'
