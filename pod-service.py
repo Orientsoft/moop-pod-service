@@ -47,6 +47,7 @@ TENANT_SERVICE_URL = os.environ.get('TENANT_SERVICE_URL', '/').strip()
 LOG_NAME = 'Pod-Service'
 LOG_FORMAT = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s:%(funcName)s - [%(levelname)s] %(message)s'
 
+
 def setup_logger(level):
     handler = logging.StreamHandler(stream=sys.stdout)
     formatter = logging.Formatter(LOG_FORMAT)
@@ -57,6 +58,7 @@ def setup_logger(level):
     logger.setLevel(level)
 
     return logger
+
 
 logger = setup_logger(int(LOG_LEVEL))
 
@@ -69,12 +71,15 @@ else:
 # create an instance of the API class
 api_instance = kubernetes.client.CoreV1Api()
 
+
 # helper
 def datetime_convertor(o):
     if isinstance(o, datetime.datetime):
         return o.__str__()
 
+
 app = Flask(__name__)
+
 
 def create_body(f):
     @wraps(f)
@@ -95,7 +100,7 @@ def create_body(f):
         vols = req_body['vols'] if 'vols' in req_body.keys() else []
 
         # read templates from tenant service
-        tenant_resp = requests.get('{}/{}'.format(TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': MOOPKEY})
+        tenant_resp = requests.get('{}/{}/{}'.format('/tenants', TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': MOOPKEY})
         if tenant_resp.status_code != 200:
             logger.error('Request Error: {}\nStack: {}\n'.format(tenant_resp.json(), traceback.format_exc()))
             return Response(
@@ -124,9 +129,9 @@ def create_body(f):
                 {
                     'name': vol_names[i],
                     'persistentVolumeClaim':
-                    {
-                        'claimName': vol['pvc']
-                    }
+                        {
+                            'claimName': vol['pvc']
+                        }
                 }
             )
 
@@ -150,6 +155,7 @@ def create_body(f):
 
     return decorated
 
+
 def get_params(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -168,7 +174,7 @@ def get_params(f):
             )
 
         # read templates from tenant service
-        tenant_resp = requests.get('{}/{}'.format(TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': MOOPKEY})
+        tenant_resp = requests.get('{}/{}/{}'.format('/tenants', TENANT_SERVICE_URL, req_body['tenant']), headers={'moopkey': MOOPKEY})
         if tenant_resp.status_code != 200:
             logger.error('Request Error: {}\nStack: {}\n'.format(tenant_resp.json(), traceback.format_exc()))
             return Response(
@@ -187,6 +193,7 @@ def get_params(f):
         )
 
     return decorated
+
 
 # POST /pods
 @app.route('/{}{}'.format(API_VERSION, SERVICE_PREFIX), methods=['POST'])
@@ -227,6 +234,7 @@ def create_pod(body, req_body, namespace=''):
             mimetype='application/json'
         )
 
+
 # GET /pods
 @app.route('/{}{}'.format(API_VERSION, SERVICE_PREFIX), methods=['GET'])
 @get_params
@@ -265,6 +273,7 @@ def read_pod(req_body, namespace=''):
             status=500,
             mimetype='application/json'
         )
+
 
 # DELETE /pods
 @app.route('/{}{}'.format(API_VERSION, SERVICE_PREFIX), methods=['DELETE'])
