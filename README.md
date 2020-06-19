@@ -97,6 +97,7 @@ in_cluster: false
 # 10 - debug
 log_level: 10
 tenant_service_url: 'http://192.168.0.48:7778/service/v1/tenants'
+MOOPKEY: 'XXXXX'
 ```
 
 ## dev start
@@ -121,6 +122,7 @@ podInRequest:
         {
             "pvc": String, // PVC name
             "mount": String, // mount point
+            "subpath": String // mount sub path
         }
     ]
 }

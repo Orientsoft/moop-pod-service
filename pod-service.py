@@ -138,7 +138,8 @@ def create_body(f):
             volumeMounts.append(
                 {
                     'name': vol_names[i],
-                    'mountPath': vol['mount']
+                    'mountPath': vol['mount'],
+                    'subPath': vol['subpath']
                 }
             )
 
